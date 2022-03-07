@@ -8,6 +8,18 @@ Learn more details about the pipeline and tools based on it on [AliceVision webs
 
 See [results of the pipeline on sketchfab](http://sketchfab.com/AliceVision).
 
+## AB_DEV Build instructions
+
+Start the build container by running ./alicevision_env.sh
+
+Then
+
+```bash
+mkdir build
+cd build
+ccmake -DALICEVISION_USE_ALEMBIC=ON ../   # Results in errors about Assimp lib but after a few tries make will run
+make -j4
+```
 
 ## Photogrammetry
 
