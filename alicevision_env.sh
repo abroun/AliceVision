@@ -3,6 +3,7 @@
 USER_ID=`id -u`
 
 IMAGE_TAG=env/alicevision
+CONTAINER_NAME_ENV=alicevision_env
 
 # Create the docker environment for building AliceVision
 docker build -t $IMAGE_TAG docker/build_env/. \
@@ -10,6 +11,7 @@ docker build -t $IMAGE_TAG docker/build_env/. \
 
 # Start the command line
 docker run --rm -it \
+    --name ${CONTAINER_NAME_ENV} \
     -e DISPLAY=${DISPLAY} \
     -v $(pwd):/src \
     -v /media/datasets:/media/datasets \

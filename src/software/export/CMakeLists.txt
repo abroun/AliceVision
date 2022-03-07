@@ -53,6 +53,23 @@ alicevision_add_software(aliceVision_exportMatches
         Boost::timer
 )
 
+# Export depth map as PLY file
+alicevision_add_software(aliceVision_exportDepthMap
+  SOURCE main_exportDepthMap.cpp
+  FOLDER ${FOLDER_SOFTWARE_EXPORT}
+  LINKS aliceVision_system
+        aliceVision_feature
+        aliceVision_mvsData
+        aliceVision_mvsUtils
+        aliceVision_sfm
+        aliceVision_sfmData
+        aliceVision_sfmDataIO
+        Boost::program_options
+        Boost::filesystem
+        Boost::boost
+        Boost::timer
+)
+
 # Export view tracks per image pair
 alicevision_add_software(aliceVision_exportTracks
   SOURCE main_exportTracks.cpp
