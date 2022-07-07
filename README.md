@@ -14,11 +14,50 @@ Start the build container by running ./alicevision_env.sh
 
 Then
 
+Build and install geogram
+
+```bash
+cd src/dependencies/geogram/
+mkdir build
+cd build
+cmake -DCMAKE_BUILD_TYPE=Release \
+     -DCMAKE_INSTALL_PREFIX=/src/src/dependencies/geogram/build/install -DGEOGRAM_LIB_ONLY=ON \
+     -DGEOGRAM_USE_SYSTEM_GLFW3=OFF -DGEOGRAM_WITH_EXPLORAGRAM=OFF \
+     -DGEOGRAM_WITH_FPG=OFF -DGEOGRAM_WITH_GRAPHICS=OFF \
+     -DGEOGRAM_WITH_HLBFGS=OFF -DGEOGRAM_WITH_LEGACY_NUMERICS=OFF \
+     -DGEOGRAM_WITH_LUA=OFF -DGEOGRAM_WITH_TETGEN=OFF \
+     -DGEOGRAM_WITH_TRIANGLE=OFF -DVORPALINE_PLATFORM=Linux64-gcc ../
+make -j4
+make install
+```
+
+then
+
 ```bash
 mkdir build
 cd build
-ccmake -DALICEVISION_USE_ALEMBIC=ON ../   # Results in errors about Assimp lib but after a few tries make will run
+ccmake -DALICEVISION_USE_ALEMBIC=ON \
+  -DGEOGRAM_INCLUDE_DIR=/src/src/dependencies/geogram/build/install/include/geogram1 \
+  -DGEOGRAM_LIBRARY=/src/src/dependencies/geogram/build/install/lib/libgeogram.a  \
+  ../   # Results in errors about Assimp lib but after a few tries make will run
 make -j4
+```
+
+## Building meshes for Lion dataset
+
+```bash
+./Linux-x86_64/aliceVision_convertSfMFormat --input ../data/lion/colmap.sfm -d sift --output ../data/lion/sfm.abc
+
+mkdir ../data/lion/prepare_dense_scene
+./Linux-x86_64/aliceVision_prepareDenseScene --input ../data/lion/sfm.abc --saveMatricesTxtFiles 1 --output ../data/lion/prepare_dense_scene
+
+
+mkdir ../data/lion/depth_map
+./Linux-x86_64/aliceVision_depthMapEstimation --input ../data/lion/sfm.abc --imagesFolder ../data/lion/prepare_dense_scene --output ../data/lion/depth_map
+
+mkdir ../data/lion/depth_map_filter
+./Linux-x86_64/aliceVision_depthMapFiltering --input ../data/lion/sfm.abc --depthMapsFolder ../data/lion/depth_map --output ../data/lion/depth_map_filter
+
 ```
 
 ## Photogrammetry

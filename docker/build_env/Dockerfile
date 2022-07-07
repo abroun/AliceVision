@@ -40,20 +40,22 @@ WORKDIR /deps/alembic/build
 RUN cmake ../
 RUN make -j && make install && make package
 
-# Build and install the Geogram lib
-WORKDIR /deps
-RUN git clone https://drbroun@bitbucket.org/drbroun/geogram.git
-WORKDIR /deps/geogram
-RUN git checkout beholder
-RUN mkdir /deps/geogram/build
-WORKDIR /deps/geogram/build
-RUN cmake -DCMAKE_BUILD_TYPE=Release -DGEOGRAM_LIB_ONLY=ON \
-     -DGEOGRAM_USE_SYSTEM_GLFW3=OFF -DGEOGRAM_WITH_EXPLORAGRAM=OFF \
-     -DGEOGRAM_WITH_FPG=OFF -DGEOGRAM_WITH_GRAPHICS=OFF \
-     -DGEOGRAM_WITH_HLBFGS=OFF -DGEOGRAM_WITH_LEGACY_NUMERICS=OFF \
-     -DGEOGRAM_WITH_LUA=OFF -DGEOGRAM_WITH_TETGEN=OFF \
-     -DGEOGRAM_WITH_TRIANGLE=OFF -DVORPALINE_PLATFORM=Linux64-gcc ../
-RUN make -j && make install
+# # Build and install the Geogram lib
+# WORKDIR /deps
+# RUN git clone https://drbroun@bitbucket.org/drbroun/geogram.git
+# WORKDIR /deps/geogram
+# RUN git checkout beholder
+# RUN mkdir /deps/geogram/build
+# WORKDIR /deps/geogram/build
+# RUN cmake -DCMAKE_BUILD_TYPE=Release -DGEOGRAM_LIB_ONLY=ON \
+#      -DGEOGRAM_USE_SYSTEM_GLFW3=OFF -DGEOGRAM_WITH_EXPLORAGRAM=OFF \
+#      -DGEOGRAM_WITH_FPG=OFF -DGEOGRAM_WITH_GRAPHICS=OFF \
+#      -DGEOGRAM_WITH_HLBFGS=OFF -DGEOGRAM_WITH_LEGACY_NUMERICS=OFF \
+#      -DGEOGRAM_WITH_LUA=OFF -DGEOGRAM_WITH_TETGEN=OFF \
+#      -DGEOGRAM_WITH_TRIANGLE=OFF -DVORPALINE_PLATFORM=Linux64-gcc ../
+# RUN make -j && make install
+
+RUN apt-get update && apt-get install -y gdb
 
 # Gui deps
 RUN apt-get update && apt-get install -y xterm
