@@ -17,16 +17,15 @@ Then
 Build and install geogram
 
 ```bash
-cd src/dependencies/geogram/
-mkdir build
-cd build
+mkdir build_geogram
+cd build_geogram
 cmake -DCMAKE_BUILD_TYPE=Release \
-     -DCMAKE_INSTALL_PREFIX=/src/src/dependencies/geogram/build/install -DGEOGRAM_LIB_ONLY=ON \
+     -DCMAKE_INSTALL_PREFIX=/src/build_geogram/install -DGEOGRAM_LIB_ONLY=ON \
      -DGEOGRAM_USE_SYSTEM_GLFW3=OFF -DGEOGRAM_WITH_EXPLORAGRAM=OFF \
      -DGEOGRAM_WITH_FPG=OFF -DGEOGRAM_WITH_GRAPHICS=OFF \
      -DGEOGRAM_WITH_HLBFGS=OFF -DGEOGRAM_WITH_LEGACY_NUMERICS=OFF \
      -DGEOGRAM_WITH_LUA=OFF -DGEOGRAM_WITH_TETGEN=OFF \
-     -DGEOGRAM_WITH_TRIANGLE=OFF -DVORPALINE_PLATFORM=Linux64-gcc ../
+     -DGEOGRAM_WITH_TRIANGLE=OFF -DVORPALINE_PLATFORM=Linux64-gcc ../src/dependencies/geogram/
 make -j4
 make install
 ```
@@ -37,8 +36,8 @@ then
 mkdir build
 cd build
 ccmake -DALICEVISION_USE_ALEMBIC=ON \
-  -DGEOGRAM_INCLUDE_DIR=/src/src/dependencies/geogram/build/install/include/geogram1 \
-  -DGEOGRAM_LIBRARY=/src/src/dependencies/geogram/build/install/lib/libgeogram.a  \
+  -DGEOGRAM_INCLUDE_DIR=/src/build_geogram/install/include/geogram1 \
+  -DGEOGRAM_LIBRARY=/src/build_geogram/install/lib/libgeogram.a  \
   ../   # Results in errors about Assimp lib but after a few tries make will run
 make -j4
 ```
